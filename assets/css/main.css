@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg-page: #FFF7F4;
+    --primary: #E76A4D;
+    --primary-hover: #D85D3E;
+    --primary-light: #FFF0EB;
+    --secondary: #F5A623;
+    --accent-emerald: #10B981;
+    --accent-indigo: #6366F1;
+    --accent-cyan: #06B6D4;
+    --surface: #FFFFFF;
+    --card-bg: #FFFFFF;
+    --border-color: #F2D8D2;
+    --text-primary: #1F2937;
+    --text-secondary: #6B7280;
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --error: #EF4444;
+  }
+
+  body {
+    background-color: var(--bg-page);
+    background-image:
+      radial-gradient(circle at 10% 10%, rgba(231, 106, 77, 0.10) 0%, transparent 40%),
+      radial-gradient(circle at 90% 20%, rgba(245, 166, 35, 0.08) 0%, transparent 45%),
+      linear-gradient(180deg, #E76A4D 0%, #F08C6A 300px, #FFF7F4 550px);
+    background-repeat: no-repeat;
+    color: var(--text-primary);
+    font-family: 'Inter', 'Manrope', system-ui, -apple-system, sans-serif;
+    overflow-x: hidden;
+    min-height: 100vh;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  }
+}
+
+/* Enriched Soft Shadows & Card Micro-Interactions */
+.shadow-soft {
+  box-shadow: 0 10px 30px rgba(231, 106, 77, 0.06), 0 2px 6px rgba(0, 0, 0, 0.02);
+}
+
+.shadow-soft-lg {
+  box-shadow: 0 20px 45px rgba(231, 106, 77, 0.1), 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+
+/* Vibrant Gradient Utility Badges */
+.bg-gradient-coral {
+  background: linear-gradient(135deg, #E76A4D 0%, #F08C6A 100%);
+}
+
+.bg-gradient-amber {
+  background: linear-gradient(135deg, #F5A623 0%, #F59E0B 100%);
+}
+
+.text-gradient-coral {
+  background: linear-gradient(135deg, #E76A4D 0%, #F5A623 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Radius Utilities */
+.card-rounded {
+  border-radius: 24px;
+}
+
+.btn-rounded {
+  border-radius: 18px;
+}
+
+.input-rounded {
+  border-radius: 16px;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(242, 216, 210, 0.3);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(231, 106, 77, 0.3);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(231, 106, 77, 0.55);
+}
+
+/* HIGH-CONTRAST LIGHT PROSE STYLES FOR LESSON READER */
+.prose-soft {
+  color: #1F2937 !important;
+  font-size: 0.9375rem;
+  line-height: 1.75;
+}
+
+.prose-soft h1 {
+  color: #111827 !important;
+  font-size: 1.875rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  letter-spacing: -0.025em;
+}
+
+.prose-soft h2 {
+  color: #111827 !important;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose-soft h3 {
+  color: #111827 !important;
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose-soft p {
+  color: #374151 !important;
+  margin-bottom: 1rem;
+}
+
+.prose-soft strong {
+  color: #111827 !important;
+  font-weight: 700;
+}
+
+.prose-soft ul, .prose-soft ol {
+  color: #374151 !important;
+  padding-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.prose-soft li {
+  margin-bottom: 0.375rem;
+}
+
+/* Inline Code Badges */
+.prose-soft code:not(pre code) {
+  color: #E76A4D !important;
+  background: #FFF0EB !important;
+  padding: 0.2rem 0.45rem !important;
+  border-radius: 0.375rem !important;
+  font-size: 0.85em !important;
+  font-weight: 600 !important;
+  border: 1px solid #F2D8D2 !important;
+  font-family: 'JetBrains Mono', monospace !important;
+}
+
+/* Pre Code Blocks inside Lesson Content */
+.prose-soft pre {
+  background-color: #0F172A !important;
+  color: #F8FAFC !important;
+  padding: 1.25rem !important;
+  border-radius: 1rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  overflow-x: auto !important;
+  margin-top: 1rem !important;
+  margin-bottom: 1.25rem !important;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15) !important;
+}
+
+.prose-soft pre code {
+  background: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  border: none !important;
+  font-size: 0.85rem !important;
+  line-height: 1.6 !important;
+}

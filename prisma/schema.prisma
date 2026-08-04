@@ -1,0 +1,85 @@
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id                String                @id @default(uuid())
+  email             String                @unique
+  name              String
+  passwordHash      String?
+  avatar            String?
+  role              String                @default("STUDENT") // "STUDENT" | "ADMIN"
+  provider          String                @default("credentials") // "credentials" | "github" | "google"
+  providerAccountId String?
+  xp                Int                   @default(0)
+  streak            Int                   @default(1)
+  lastActiveAt      DateTime              @default(now())
+  createdAt         DateTime              @default(now())
+  updatedAt         DateTime              @updatedAt
+  progress          Progress[]
+  submissions       ChallengeSubmission[]
+}
+
+model CourseModule {
+  id                  String   @id @default(uuid())
+  slug                String   @unique
+  title               String
+  titleHinglish       String
+  description         String
+  descriptionHinglish String
+  order               Int      @default(0)
+  icon                String   @default("code")
+  createdAt           DateTime @default(now())
+  lessons             Lesson[]
+}
+
+model Lesson {
+  id              String       @id @default(uuid())
+  slug            String
+  title           String
+  titleHinglish   String
+  order           Int          @default(0)
+  moduleId        String
+  module          CourseModule @relation(fields: [moduleId], references: [id], onDelete: Cascade)
+  starterCode     String
+  solutionCode    String?
+  testSpecs       String // JSON string representing tests
+  durationMinutes Int          @default(15)
+  xpPoints        Int          @default(50)
+  createdAt       DateTime     @default(now())
+
+  progress    Progress[]
+  submissions ChallengeSubmission[]
+
+  @@unique([moduleId, slug])
+}
+
+model Progress {
+  id          String   @id @default(uuid())
+  userId      String
+  lessonId    String
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson      Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  completed   Boolean  @default(false)
+  score       Int      @default(100)
+  completedAt DateTime @default(now())
+
+  @@unique([userId, lessonId])
+}
+
+model ChallengeSubmission {
+  id        String   @id @default(uuid())
+  userId    String
+  lessonId  String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  lesson    Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  code      String
+  status    String // "PASSED" | "FAILED"
+  runtimeMs Int      @default(0)
+  createdAt DateTime @default(now())
+}
