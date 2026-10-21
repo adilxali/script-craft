@@ -5,6 +5,7 @@ from app.core.config import settings
 from app.core.exceptions import PharmacyERPException
 from app.core.tenant_context import TenantContext, set_tenant_context, clear_tenant_context
 from app.core.security import decode_jwt_token
+from app.modules.identity.api import auth, organizations, branches, users, roles
 from uuid import UUID
 
 app = FastAPI(
@@ -14,7 +15,7 @@ app = FastAPI(
     redoc_url=f"{settings.API_V1_STR}/redoc"
 )
 
-# CORS
+# CORS Middleware
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -40,7 +41,7 @@ async def tenant_middleware(request: Request, call_next):
             )
             set_tenant_context(ctx)
         except Exception:
-            pass  # Route guards will enforce valid authentication where required
+            pass  # Route guards enforce valid authentication where required
             
     try:
         response = await call_next(request)
@@ -62,6 +63,13 @@ async def pharmacy_erp_exception_handler(request: Request, exc: PharmacyERPExcep
             "invalid_params": exc.invalid_params
         }
     )
+
+# Include Routers under API prefix /api/v1
+app.include_router(auth.router, prefix=settings.API_V1_STR)
+app.include_router(organizations.router, prefix=settings.API_V1_STR)
+app.include_router(branches.router, prefix=settings.API_V1_STR)
+app.include_router(users.router, prefix=settings.API_V1_STR)
+app.include_router(roles.router, prefix=settings.API_V1_STR)
 
 @app.get("/health", tags=["Health"])
 def health_check():
